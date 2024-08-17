@@ -1,12 +1,12 @@
-import 'package:adivina_el_numero_desafio/presentation/providers/game_form_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GameOverScreen extends ConsumerWidget {
-  const GameOverScreen({super.key});
+class GameOverScreen extends StatelessWidget {
+  final int currentNumber;
+  final void Function() onTap;
+  const GameOverScreen({super.key, required this.currentNumber, required this.onTap, });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -17,12 +17,9 @@ class GameOverScreen extends ConsumerWidget {
               'u.u',
               style: TextStyle(fontSize: 30),
             ),
+            Text('El numero era $currentNumber'),
             const Text('Quieres intentarlo de nuevo?'),
-            OutlinedButton(
-                onPressed: () {
-                  ref.read(gameFormProvider.notifier).onGameLevelChange(0);
-                },
-                child: const Text('Claro que si!'))
+            OutlinedButton(onPressed: onTap, child: const Text('Claro que si!'))
           ],
         ),
       ),
