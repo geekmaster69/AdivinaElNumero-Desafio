@@ -1,9 +1,10 @@
-import 'package:adivina_el_numero_desafio/config/helpers/show_snackbar.dart';
-import 'package:adivina_el_numero_desafio/presentation/providers/game_form_provider.dart';
-import 'package:adivina_el_numero_desafio/presentation/screens/game_over_screen.dart';
-import 'package:adivina_el_numero_desafio/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../config/config.dart';
+import '../providers/provider.dart';
+import '../widgets/widgets.dart';
+import 'game_over_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

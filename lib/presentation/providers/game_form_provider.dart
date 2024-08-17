@@ -7,6 +7,7 @@ const gameLevels = [
   GameLevel(label: 'Medio', tries: 8, range: 20),
   GameLevel(label: 'Avanzado', tries: 15, range: 100),
   GameLevel(label: 'Extremo', tries: 25, range: 1000),
+  GameLevel(label: 'Infierno', tries: 5, range: 1000000),
 ];
 
 final gameFormProvider =
