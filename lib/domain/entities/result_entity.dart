@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ResultEntity {
   final int number;
-  final Color color;
+  final Color? color;
 
-  ResultEntity({required this.number, this.color = Colors.black});
+  ResultEntity({required this.number, this.color});
 }

@@ -32,7 +32,7 @@ class GameFormNotifier extends StateNotifier<GameFormState> {
   }
 
   void onFormSubmit(int value) {
-    if (value == 0 || value > state.currentNumber) {
+    if (value == 0 || value > state.gameLevel.range) {
       setMessage('Debes elegir un numero entre 1 y ${state.gameLevel.range}');
       return;
     }

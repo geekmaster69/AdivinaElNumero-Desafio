@@ -6,10 +6,11 @@ class TriesCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          border: Border.all(), borderRadius: BorderRadius.circular(16)),
+          border: Border.all(color: colors.onSurface), borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
