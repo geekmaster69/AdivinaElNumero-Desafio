@@ -16,11 +16,19 @@ class HomeScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-            Flexible(
-              flex: 1,
-              child: CustomTextFormField()),
-            Flexible(child: TriesCounter())
-          ],),
+              Flexible(
+                  flex: 1,
+                  child: CustomTextFormField(
+                    hintText: 'Ingrese un numero',
+                    label: 'Adivina el numero',
+                    onSubmit: (value) {},
+                  )),
+              Flexible(
+                  child: TriesCounter(
+                remainingTries: 5,
+              ))
+            ],
+          ),
           SizedBox(
             height: size.height * 0.33,
             child: Row(
@@ -31,8 +39,12 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          SliderGameLevel()
+          SliderGameLevel(
+            currentLevel: 1,
+            label: 'Fácil',
+            listSize: 4,
+            onChange: (levelSelected) {},
+          )
         ],
       ),
     );

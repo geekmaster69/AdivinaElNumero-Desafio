@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 
 class SliderGameLevel extends StatelessWidget {
-  const SliderGameLevel({super.key});
+  final int listSize;
+  final Function(double levelSelected) onChange;
+  final int currentLevel;
+  final String label;
+
+  const SliderGameLevel(
+      {super.key,
+      required this.listSize,
+      required this.onChange,
+      required this.currentLevel,
+      required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Slider(
-      value: 1.0,
-      onChanged: (value) {},
+      label: label,
+      value: currentLevel.toDouble(),
+      max: listSize.toDouble(),
+      onChanged: onChange,
     );
   }
 }

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class TriesCounter extends StatelessWidget {
-  const TriesCounter({super.key});
+  final int remainingTries;
+  const TriesCounter({super.key, required this.remainingTries});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           border: Border.all(), borderRadius: BorderRadius.circular(16)),
       child: Column(
-        
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('Intentos'), Text('5')],
+        children: [const Text('Intentos'), Text('$remainingTries')],
       ),
     );
   }
