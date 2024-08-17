@@ -18,7 +18,8 @@ class SliderGameLevel extends StatelessWidget {
     return Slider(
       label: label,
       value: currentLevel.toDouble(),
-      max: listSize.toDouble(),
+      divisions:listSize -1 ,
+      max: listSize.toDouble() -1,
       onChanged: onChange,
     );
   }

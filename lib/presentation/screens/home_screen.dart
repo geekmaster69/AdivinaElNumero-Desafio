@@ -1,12 +1,18 @@
+import 'package:adivina_el_numero_desafio/presentation/providers/game_form_provider.dart';
 import 'package:adivina_el_numero_desafio/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
+
+    final gameFormState = ref.watch(gameFormProvider);
+    final gameFormNotifier = ref.watch(gameFormProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Screen'),
@@ -21,11 +27,15 @@ class HomeScreen extends StatelessWidget {
                   child: CustomTextFormField(
                     hintText: 'Ingrese un numero',
                     label: 'Adivina el numero',
-                    onSubmit: (value) {},
+                    onSubmit: (value) {
+                      final gamerResponse = int.tryParse(value) ?? 0;
+
+                      gameFormNotifier.onFormSubmit(gamerResponse);
+                    },
                   )),
               Flexible(
                   child: TriesCounter(
-                remainingTries: 5,
+                remainingTries: gameFormState.gameLevel.tries,
               ))
             ],
           ),
@@ -40,10 +50,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliderGameLevel(
-            currentLevel: 1,
-            label: 'Fácil',
-            listSize: 4,
-            onChange: (levelSelected) {},
+            currentLevel: gameFormState.gameLevelIndex,
+            label: gameFormState.gameLevel.label,
+            listSize: gameLevels.length,
+            onChange: (levelSelected) {
+              gameFormNotifier.onGameLevelChange(levelSelected.toInt());
+            },
           )
         ],
       ),

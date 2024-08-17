@@ -1,4 +1,5 @@
 import 'package:adivina_el_numero_desafio/domain/domain.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const gameLevels = [
@@ -8,11 +9,52 @@ const gameLevels = [
   GameLevel(label: 'Extremo', tries: 25, range: 1000),
 ];
 
+final gameFormProvider =
+    StateNotifierProvider<GameFormNotifier, GameFormState>((ref) {
+  return GameFormNotifier();
+});
+
 class GameFormNotifier extends StateNotifier<GameFormState> {
   GameFormNotifier() : super(GameFormState(gameLevel: gameLevels.first));
 
-  void onGameLevelChange(int value){
-    state = state.copyWith(gameLevelIndex: value);
+  void onGameLevelChange(int value) {
+    final newGameLevel = gameLevels[value];
+    state = state.copyWith(
+        gameLevelIndex: value,
+        minorThan: [],
+        greaterThan: [],
+        gameLevel: newGameLevel,
+        currentNumber: newGameLevel.getRandomNumber);
+  }
+
+  void onFormSubmit(int value) {
+    if (value == 0) {
+      setMessage('Debes elegir un numero entre 1 y ${state.gameLevel.range}');
+      return;
+    }
+
+    if (value == state.currentNumber) {
+      state = state.copyWith(history: [
+        ...state.history,
+        ResultEntity(number: value, color: Colors.green)
+      ]);
+      onGameLevelChange(state.gameLevelIndex);
+      return;
+    }
+
+    if (value > state.currentNumber) {
+      state = state.copyWith(
+          greaterThan: [...state.greaterThan, ResultEntity(number: value)]);
+    }
+    if (value < state.currentNumber) {
+      state = state.copyWith(
+          minorThan: [...state.minorThan, ResultEntity(number: value)]);
+    }
+  }
+
+  void setMessage(String message) {
+    state = state.copyWith(message: message);
+    state = state.copyWith(message: '');
   }
 }
 
@@ -30,7 +72,7 @@ class GameFormState {
       {required this.gameLevel,
       this.triesRemaining = 0,
       this.currentNumber = 0,
-      this.gameLevelIndex = 1,
+      this.gameLevelIndex = 0,
       this.minorThan = const [],
       this.greaterThan = const [],
       this.history = const [],

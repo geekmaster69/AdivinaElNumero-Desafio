@@ -22,6 +22,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.none,
       controller: controller,
       onFieldSubmitted: (value) {
         controller.clear();
