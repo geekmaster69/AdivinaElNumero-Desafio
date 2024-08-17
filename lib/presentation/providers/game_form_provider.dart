@@ -2,12 +2,13 @@ import 'package:adivina_el_numero_desafio/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
+// Aqui se pueden agregar o quitar niveles
 const gameLevels = [
   GameLevel(label: 'Fácil', tries: 5, range: 10),
   GameLevel(label: 'Medio', tries: 8, range: 20),
   GameLevel(label: 'Avanzado', tries: 15, range: 100),
   GameLevel(label: 'Extremo', tries: 25, range: 1000),
-  GameLevel(label: 'Infierno', tries: 5, range: 1000000),
 ];
 
 final gameFormProvider =
