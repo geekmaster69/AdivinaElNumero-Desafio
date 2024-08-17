@@ -15,12 +15,16 @@ final gameFormProvider =
 });
 
 class GameFormNotifier extends StateNotifier<GameFormState> {
-  GameFormNotifier() : super(GameFormState(gameLevel: gameLevels.first));
+  GameFormNotifier() : super(GameFormState(gameLevel: gameLevels.first)) {
+    onGameLevelChange(0);
+  }
 
   void onGameLevelChange(int value) {
     final newGameLevel = gameLevels[value];
     state = state.copyWith(
         gameLevelIndex: value,
+        triesRemaining: newGameLevel.tries,
+        endGame: false,
         minorThan: [],
         greaterThan: [],
         gameLevel: newGameLevel,
@@ -42,13 +46,22 @@ class GameFormNotifier extends StateNotifier<GameFormState> {
       return;
     }
 
-    if (value > state.currentNumber) {
+    if (value < state.currentNumber) {
       state = state.copyWith(
           greaterThan: [...state.greaterThan, ResultEntity(number: value)]);
     }
-    if (value < state.currentNumber) {
+    if (value > state.currentNumber) {
       state = state.copyWith(
           minorThan: [...state.minorThan, ResultEntity(number: value)]);
+    }
+
+    state = state.copyWith(triesRemaining: state.triesRemaining - 1);
+
+    if (state.triesRemaining == 0) {
+      state = state.copyWith(endGame: true, history: [
+        ...state.history,
+        ResultEntity(number: value, color: Colors.red)
+      ]);
     }
   }
 
@@ -67,6 +80,7 @@ class GameFormState {
   final List<ResultEntity> greaterThan;
   final List<ResultEntity> history;
   final String message;
+  final bool endGame;
 
   GameFormState(
       {required this.gameLevel,
@@ -76,10 +90,12 @@ class GameFormState {
       this.minorThan = const [],
       this.greaterThan = const [],
       this.history = const [],
+      this.endGame = false,
       this.message = ''});
 
   GameFormState copyWith({
     GameLevel? gameLevel,
+    bool? endGame,
     int? triesRemaining,
     int? gameLevelIndex,
     int? currentNumber,
@@ -90,6 +106,7 @@ class GameFormState {
   }) {
     return GameFormState(
       gameLevel: gameLevel ?? this.gameLevel,
+      endGame: endGame ?? this.endGame,
       gameLevelIndex: gameLevelIndex ?? this.gameLevelIndex,
       triesRemaining: triesRemaining ?? this.triesRemaining,
       currentNumber: currentNumber ?? this.currentNumber,

@@ -23,9 +23,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.number,
-      textInputAction: TextInputAction.none,
+      textInputAction: TextInputAction.unspecified,
+     
       controller: controller,
       onFieldSubmitted: (value) {
+        
         controller.clear();
         widget.onSubmit(value);
       },

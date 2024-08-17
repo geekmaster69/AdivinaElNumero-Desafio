@@ -1,4 +1,5 @@
 import 'package:adivina_el_numero_desafio/presentation/providers/game_form_provider.dart';
+import 'package:adivina_el_numero_desafio/presentation/screens/game_over_screen.dart';
 import 'package:adivina_el_numero_desafio/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +14,9 @@ class HomeScreen extends ConsumerWidget {
     final gameFormState = ref.watch(gameFormProvider);
     final gameFormNotifier = ref.watch(gameFormProvider.notifier);
 
-    return Scaffold(
+    return  (gameFormState.endGame)
+    ? GameOverScreen()
+   : Scaffold(
       appBar: AppBar(
         title: Text('Home Screen'),
       ),
@@ -35,7 +38,7 @@ class HomeScreen extends ConsumerWidget {
                   )),
               Flexible(
                   child: TriesCounter(
-                remainingTries: gameFormState.gameLevel.tries,
+                remainingTries: gameFormState.triesRemaining,
               ))
             ],
           ),
@@ -43,9 +46,9 @@ class HomeScreen extends ConsumerWidget {
             height: size.height * 0.33,
             child: Row(
               children: [
-                CounterWidget(numbers: [], title: 'Mayor que'),
-                CounterWidget(numbers: [], title: 'Menor que'),
-                CounterWidget(numbers: [], title: 'Historial'),
+                CounterWidget(numbers: gameFormState.greaterThan, title: 'Mayor que'),
+                CounterWidget(numbers: gameFormState.minorThan, title: 'Menor que'),
+                CounterWidget(numbers: gameFormState.history, title: 'Historial'),
               ],
             ),
           ),
