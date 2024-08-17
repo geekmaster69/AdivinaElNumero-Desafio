@@ -5,7 +5,7 @@ class GameLevel {
   final int tries;
   final int range;
 
-  GameLevel({required this.label, required this.tries, required this.range});
+ const  GameLevel({required this.label, required this.tries, required this.range});
 
   int get getRandomNumber => Random().nextInt(range) + 1;
 }
